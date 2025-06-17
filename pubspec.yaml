@@ -57,6 +57,10 @@ dependencies:
   shimmer: ^3.0.0
   flutter_animate: ^4.5.0
 
+  # 🎨 CREATIVE & INTERACTIVE UI LIBRARIES
+  # Advanced animations
+  animate_do: ^3.3.4              # Beautiful pre-built animations
+
   # Image Processing
   image: ^4.3.0
   path_provider: ^2.1.5
