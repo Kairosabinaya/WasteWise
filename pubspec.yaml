@@ -60,6 +60,17 @@ dependencies:
   # 🎨 CREATIVE & INTERACTIVE UI LIBRARIES
   # Advanced animations
   animate_do: ^3.3.4              # Beautiful pre-built animations
+  
+  # Modern Icons & Illustrations
+  lucide_icons: ^0.257.0          # Modern outline icons
+  feather_icons: ^1.2.0           # Feather icon set
+  
+  # Enhanced UI Components
+  image_picker: ^1.1.2            # Profile image picker
+  
+  # Neumorphic & 3D Effects
+  clay_containers: ^0.3.2         # Neumorphic containers
+  flutter_inset_box_shadow: ^1.0.8 # Inset shadows for neumorphic effects
 
   # Image Processing
   image: ^4.3.0
