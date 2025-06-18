@@ -70,7 +70,6 @@ dependencies:
   
   # Neumorphic & 3D Effects
   clay_containers: ^0.3.2         # Neumorphic containers
-  flutter_inset_box_shadow: ^1.0.8 # Inset shadows for neumorphic effects
 
   # Image Processing
   image: ^4.3.0
@@ -91,6 +90,8 @@ dependencies:
   # Utils
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
+  equatable: ^2.0.5
+  dartz: ^0.10.1
 
 dev_dependencies:
   flutter_test:

@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_options.dart';
 import 'core/theme/app_theme.dart';
+import 'core/services/service_locator.dart';
 import 'shared/widgets/main_navigation.dart';
 
 void main() async {
@@ -11,6 +12,9 @@ void main() async {
 
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Setup dependency injection
+  await setupServiceLocator();
 
   // Set system UI overlay style for status bar
   SystemChrome.setSystemUIOverlayStyle(
