@@ -36,17 +36,17 @@ class AppConstants {
 
   // Waste Categories
   static const List<String> wasteCategories = [
-    'Plastik',
-    'Kertas',
-    'Logam',
-    'Organik',
-    'Elektronik',
-    'B3', // Bahan Berbahaya dan Beracun
+    'Plastic',
+    'Paper',
+    'Metal',
+    'Organic',
+    'Electronic',
+    'Hazardous', // Hazardous and Toxic Materials
   ];
 
   // User Levels
   static const Map<String, int> userLevels = {
-    'Pemula': 0,
+    'Beginner': 0,
     'Bronze': 500,
     'Silver': 1500,
     'Gold': 3000,
@@ -62,18 +62,18 @@ class AppConstants {
 
   // Error Messages
   static const String genericErrorMessage =
-      'Terjadi kesalahan. Silakan coba lagi.';
+      'An error occurred. Please try again.';
   static const String networkErrorMessage =
-      'Tidak dapat terhubung ke internet.';
+      'Unable to connect to the internet.';
   static const String timeoutErrorMessage =
-      'Koneksi timeout. Silakan coba lagi.';
+      'Connection timeout. Please try again.';
   static const String unauthorizedErrorMessage =
-      'Sesi Anda telah berakhir. Silakan login kembali.';
+      'Your session has expired. Please login again.';
 
   // Success Messages
-  static const String scanSuccessMessage = 'Sampah berhasil diidentifikasi!';
-  static const String pointsEarnedMessage = 'Anda mendapat {points} poin!';
-  static const String lessonCompletedMessage = 'Pelajaran selesai!';
+  static const String scanSuccessMessage = 'Waste successfully identified!';
+  static const String pointsEarnedMessage = 'You earned {points} points!';
+  static const String lessonCompletedMessage = 'Lesson completed!';
 
   // Validation
   static const int minPasswordLength = 8;

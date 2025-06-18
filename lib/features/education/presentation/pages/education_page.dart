@@ -18,10 +18,10 @@ class _EducationPageState extends State<EducationPage> {
   final List<EducationLesson> _lessons = [
     EducationLesson(
       id: '1',
-      title: 'Dasar-dasar Pengelolaan Sampah',
-      description: 'Pelajari konsep dasar 3R: Reduce, Reuse, Recycle',
-      duration: '10 menit',
-      difficulty: 'Pemula',
+      title: 'Waste Management Basics',
+      description: 'Learn the basic 3R concept: Reduce, Reuse, Recycle',
+      duration: '10 minutes',
+      difficulty: 'Beginner',
       points: 50,
       isCompleted: true,
       progress: 1.0,
@@ -30,10 +30,10 @@ class _EducationPageState extends State<EducationPage> {
     ),
     EducationLesson(
       id: '2',
-      title: 'Pemilahan Sampah yang Benar',
-      description: 'Cara memilah sampah organik dan anorganik dengan tepat',
-      duration: '15 menit',
-      difficulty: 'Pemula',
+      title: 'Proper Waste Sorting',
+      description: 'How to properly sort organic and inorganic waste',
+      duration: '15 minutes',
+      difficulty: 'Beginner',
       points: 75,
       isCompleted: true,
       progress: 1.0,
@@ -42,10 +42,10 @@ class _EducationPageState extends State<EducationPage> {
     ),
     EducationLesson(
       id: '3',
-      title: 'Kompos dari Sampah Organik',
-      description: 'Membuat kompos berkualitas dari sampah dapur',
-      duration: '20 menit',
-      difficulty: 'Menengah',
+      title: 'Composting from Organic Waste',
+      description: 'Making quality compost from kitchen waste',
+      duration: '20 minutes',
+      difficulty: 'Intermediate',
       points: 100,
       isCompleted: false,
       progress: 0.6,
@@ -54,10 +54,10 @@ class _EducationPageState extends State<EducationPage> {
     ),
     EducationLesson(
       id: '4',
-      title: 'Daur Ulang Kreatif',
-      description: 'Mengubah sampah menjadi barang berguna dan bernilai',
-      duration: '25 menit',
-      difficulty: 'Menengah',
+      title: 'Creative Recycling',
+      description: 'Transform waste into useful and valuable items',
+      duration: '25 minutes',
+      difficulty: 'Intermediate',
       points: 125,
       isCompleted: false,
       progress: 0.2,
@@ -67,10 +67,9 @@ class _EducationPageState extends State<EducationPage> {
     EducationLesson(
       id: '5',
       title: 'Zero Waste Lifestyle',
-      description:
-          'Menerapkan gaya hidup tanpa sampah dalam kehidupan sehari-hari',
-      duration: '30 menit',
-      difficulty: 'Lanjutan',
+      description: 'Implementing a zero waste lifestyle in daily life',
+      duration: '30 minutes',
+      difficulty: 'Advanced',
       points: 150,
       isCompleted: false,
       progress: 0.0,
@@ -81,7 +80,7 @@ class _EducationPageState extends State<EducationPage> {
 
   final List<QuizQuestion> _currentQuiz = [
     QuizQuestion(
-      question: 'Apa yang dimaksud dengan 3R dalam pengelolaan sampah?',
+      question: 'What does 3R mean in waste management?',
       options: [
         'Reduce, Reuse, Recycle',
         'Remove, Reduce, Recycle',
@@ -91,12 +90,12 @@ class _EducationPageState extends State<EducationPage> {
       correctAnswer: 0,
     ),
     QuizQuestion(
-      question: 'Sampah organik yang paling mudah dikompos adalah?',
+      question: 'Which organic waste is easiest to compost?',
       options: [
-        'Kulit buah dan sayuran',
-        'Tulang ayam',
-        'Daun kering',
-        'Semua benar',
+        'Fruit and vegetable peels',
+        'Chicken bones',
+        'Dry leaves',
+        'All of the above',
       ],
       correctAnswer: 0,
     ),
@@ -125,14 +124,14 @@ class _EducationPageState extends State<EducationPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Edukasi Lingkungan',
+            'Environmental Education',
             style: WasteWiseTheme.textTheme.displaySmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.3),
           const SizedBox(height: 4),
           Text(
-                'Pelajari cara mengelola sampah dengan benar',
+                'Learn how to manage waste properly',
                 style: WasteWiseTheme.textTheme.bodyMedium?.copyWith(
                   color: WasteWiseTheme.secondaryText,
                 ),
@@ -162,7 +161,7 @@ class _EducationPageState extends State<EducationPage> {
             children: [
               Expanded(
                 child: _buildStatItem(
-                  'Pelajaran Selesai',
+                  'Lessons Completed',
                   '$completedLessons/${_lessons.length}',
                   Icons.book,
                   WasteWiseTheme.primaryGreen,
@@ -175,7 +174,7 @@ class _EducationPageState extends State<EducationPage> {
               ),
               Expanded(
                 child: _buildStatItem(
-                  'Total Poin',
+                  'Total Points',
                   totalPoints.toString(),
                   Icons.stars,
                   WasteWiseTheme.goldStar,
@@ -188,7 +187,7 @@ class _EducationPageState extends State<EducationPage> {
               ),
               Expanded(
                 child: _buildStatItem(
-                  'Tingkat',
+                  'Level',
                   _getUserLevel(totalPoints),
                   Icons.emoji_events,
                   WasteWiseTheme.accentOrange,
@@ -208,22 +207,28 @@ class _EducationPageState extends State<EducationPage> {
     Color color,
   ) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: color, size: 24),
-        const SizedBox(height: 4),
+        Icon(icon, color: color, size: 20), // Reduced icon size
+        const SizedBox(height: 2), // Reduced spacing
         Text(
           value,
-          style: WasteWiseTheme.textTheme.titleMedium?.copyWith(
+          style: WasteWiseTheme.textTheme.titleSmall?.copyWith(
+            // Smaller font
             fontWeight: FontWeight.bold,
             color: color,
+            fontSize: 14,
           ),
         ),
         Text(
           label,
           style: WasteWiseTheme.textTheme.labelSmall?.copyWith(
             color: WasteWiseTheme.secondaryText,
+            fontSize: 10, // Smaller font size
           ),
           textAlign: TextAlign.center,
+          maxLines: 2, // Allow text wrapping
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
@@ -307,7 +312,7 @@ class _EducationPageState extends State<EducationPage> {
                                       ),
                                       const SizedBox(width: 4),
                                       Text(
-                                        'Selesai',
+                                        'Done',
                                         style: WasteWiseTheme
                                             .textTheme
                                             .labelSmall
@@ -331,49 +336,68 @@ class _EducationPageState extends State<EducationPage> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 8),
-                          Row(
+                          Wrap(
+                            // Use Wrap to prevent overflow
+                            spacing: 8, // Reduced spacing
+                            runSpacing: 4,
                             children: [
-                              Icon(
-                                Icons.access_time,
-                                size: 14,
-                                color: WasteWiseTheme.secondaryText,
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.access_time,
+                                    size: 12,
+                                    color: WasteWiseTheme.secondaryText,
+                                  ),
+                                  const SizedBox(width: 2),
+                                  Text(
+                                    lesson.duration,
+                                    style: WasteWiseTheme.textTheme.labelSmall
+                                        ?.copyWith(
+                                          color: WasteWiseTheme.secondaryText,
+                                          fontSize: 10,
+                                        ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 4),
-                              Text(
-                                lesson.duration,
-                                style: WasteWiseTheme.textTheme.labelSmall
-                                    ?.copyWith(
-                                      color: WasteWiseTheme.secondaryText,
-                                    ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.signal_cellular_alt,
+                                    size: 12,
+                                    color: WasteWiseTheme.secondaryText,
+                                  ),
+                                  const SizedBox(width: 2),
+                                  Text(
+                                    lesson.difficulty,
+                                    style: WasteWiseTheme.textTheme.labelSmall
+                                        ?.copyWith(
+                                          color: WasteWiseTheme.secondaryText,
+                                          fontSize: 10,
+                                        ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 16),
-                              Icon(
-                                Icons.signal_cellular_alt,
-                                size: 14,
-                                color: WasteWiseTheme.secondaryText,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                lesson.difficulty,
-                                style: WasteWiseTheme.textTheme.labelSmall
-                                    ?.copyWith(
-                                      color: WasteWiseTheme.secondaryText,
-                                    ),
-                              ),
-                              const SizedBox(width: 16),
-                              Icon(
-                                Icons.stars,
-                                size: 14,
-                                color: WasteWiseTheme.goldStar,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                '${lesson.points} pts',
-                                style: WasteWiseTheme.textTheme.labelSmall
-                                    ?.copyWith(
-                                      color: WasteWiseTheme.goldStar,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.stars,
+                                    size: 12,
+                                    color: WasteWiseTheme.goldStar,
+                                  ),
+                                  const SizedBox(width: 2),
+                                  Text(
+                                    '${lesson.points} pts',
+                                    style: WasteWiseTheme.textTheme.labelSmall
+                                        ?.copyWith(
+                                          color: WasteWiseTheme.goldStar,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 10,
+                                        ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -539,7 +563,7 @@ class _EducationPageState extends State<EducationPage> {
                     ),
                   ] else ...[
                     GamifiedButton(
-                      text: 'Ulangi Pelajaran',
+                      text: 'Repeat Lesson',
                       onPressed: () {
                         Navigator.of(context).pop();
                         _startQuiz(lesson);
@@ -719,7 +743,7 @@ class _QuizDialogState extends State<_QuizDialog> {
             const SizedBox(height: WasteWiseTheme.spacing20),
             if (!_showResult)
               GamifiedButton(
-                text: 'Jawab',
+                text: 'Answer',
                 onPressed: _selectedAnswer != null ? _checkAnswer : null,
                 variant: _selectedAnswer != null
                     ? ButtonVariant.primary
@@ -728,8 +752,8 @@ class _QuizDialogState extends State<_QuizDialog> {
             else
               GamifiedButton(
                 text: _currentQuestionIndex < widget.questions.length - 1
-                    ? 'Lanjut'
-                    : 'Selesai',
+                    ? 'Next'
+                    : 'Done',
                 onPressed: _nextQuestion,
                 variant: ButtonVariant.primary,
               ),

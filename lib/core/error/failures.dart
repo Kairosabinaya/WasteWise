@@ -62,15 +62,15 @@ class UnknownFailure extends Failure {
 
 // Failure Messages
 class FailureMessages {
-  static const String networkError = 'Tidak dapat terhubung ke internet';
-  static const String serverError = 'Terjadi kesalahan pada server';
-  static const String timeoutError = 'Koneksi timeout';
-  static const String authenticationError = 'Gagal melakukan autentikasi';
-  static const String unauthorizedError = 'Anda tidak memiliki akses';
-  static const String cacheError = 'Gagal mengakses data lokal';
-  static const String validationError = 'Data tidak valid';
-  static const String permissionError = 'Izin akses ditolak';
-  static const String cameraError = 'Gagal mengakses kamera';
-  static const String fileError = 'Gagal memproses file';
-  static const String unknownError = 'Terjadi kesalahan yang tidak diketahui';
+  static const String networkError = 'Unable to connect to the internet';
+  static const String serverError = 'Server error occurred';
+  static const String timeoutError = 'Connection timeout';
+  static const String authenticationError = 'Authentication failed';
+  static const String unauthorizedError = 'You do not have access';
+  static const String cacheError = 'Failed to access local data';
+  static const String validationError = 'Invalid data';
+  static const String permissionError = 'Access permission denied';
+  static const String cameraError = 'Failed to access camera';
+  static const String fileError = 'Failed to process file';
+  static const String unknownError = 'An unknown error occurred';
 }

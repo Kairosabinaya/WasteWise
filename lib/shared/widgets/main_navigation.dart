@@ -3,13 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../core/theme/app_theme.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/map/presentation/pages/smart_bin_finder_page.dart';
 import '../../features/scan/presentation/pages/scan_page.dart';
 import '../../features/marketplace/presentation/pages/marketplace_page.dart';
 import '../../features/education/presentation/pages/education_page.dart';
 import '../../features/community/presentation/pages/community_page.dart';
 
 class MainNavigation extends StatefulWidget {
-  const MainNavigation({super.key});
+  final int initialIndex;
+
+  const MainNavigation({super.key, this.initialIndex = 0});
 
   @override
   State<MainNavigation> createState() => _MainNavigationState();
@@ -17,7 +20,7 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation>
     with TickerProviderStateMixin {
-  int _currentIndex = 0;
+  late int _currentIndex;
   late PageController _pageController;
   late List<AnimationController> _iconControllers;
 
@@ -25,39 +28,40 @@ class _MainNavigationState extends State<MainNavigation>
     NavItem(
       icon: Icons.home_rounded,
       activeIcon: Icons.home,
-      label: 'Beranda',
+      label: 'Home',
       color: WasteWiseTheme.primaryGreen,
     ),
     NavItem(
-      icon: Icons.qr_code_scanner_rounded,
-      activeIcon: Icons.qr_code_scanner,
-      label: 'Scan',
+      icon: Icons.location_on_outlined,
+      activeIcon: Icons.location_on,
+      label: 'Smart Bin',
       color: WasteWiseTheme.accentBlue,
     ),
     NavItem(
       icon: Icons.shopping_bag_outlined,
       activeIcon: Icons.shopping_bag,
       label: 'Marketplace',
-      color: WasteWiseTheme.accentPurple,
+      color: WasteWiseTheme.accentOrange,
     ),
     NavItem(
       icon: Icons.school_outlined,
       activeIcon: Icons.school,
-      label: 'Edukasi',
-      color: WasteWiseTheme.accentOrange,
+      label: 'Education',
+      color: WasteWiseTheme.accentRed,
     ),
     NavItem(
       icon: Icons.group_outlined,
       activeIcon: Icons.group,
-      label: 'Komunitas',
-      color: WasteWiseTheme.accentRed,
+      label: 'Community',
+      color: WasteWiseTheme.primaryGreen,
     ),
   ];
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    _currentIndex = widget.initialIndex;
+    _pageController = PageController(initialPage: widget.initialIndex);
     _iconControllers = List.generate(
       _navItems.length,
       (index) => AnimationController(
@@ -66,7 +70,7 @@ class _MainNavigationState extends State<MainNavigation>
       ),
     );
     // Animate the initial selected icon
-    _iconControllers[0].forward();
+    _iconControllers[widget.initialIndex].forward();
   }
 
   @override
@@ -108,13 +112,24 @@ class _MainNavigationState extends State<MainNavigation>
         },
         children: [
           const HomePage(),
-          const ScanPage(),
+          const SmartBinFinderPage(showBottomNavigation: false),
           const MarketplacePage(),
           const EducationPage(),
           const CommunityPage(),
         ],
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ScanPage()),
+          );
+        },
+        backgroundColor: WasteWiseTheme.accentPurple,
+        child: const Icon(Icons.qr_code_scanner, color: Colors.white, size: 28),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -270,7 +285,7 @@ class _MainNavigationState extends State<MainNavigation>
               const SizedBox(height: WasteWiseTheme.spacing12),
 
               Text(
-                'Fitur ini sedang dalam pengembangan',
+                'This feature is under development',
                 style: WasteWiseTheme.textTheme.bodyLarge?.copyWith(
                   color: WasteWiseTheme.secondaryText,
                 ),

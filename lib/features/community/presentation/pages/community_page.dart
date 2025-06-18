@@ -20,35 +20,35 @@ class _CommunityPageState extends State<CommunityPage>
       id: '1',
       author: 'Sarah Green',
       avatar: 'SG',
-      timeAgo: '2 jam lalu',
+      timeAgo: '2 hours ago',
       content:
-          'Berhasil membuat kompos dari sampah dapur minggu ini! Hasilnya sangat bagus dan tanaman jadi lebih subur 🌱',
+          'Successfully made compost from kitchen waste this week! The results are great and plants are more fertile 🌱',
       imageUrl: 'assets/images/compost.jpg',
       likes: 24,
       comments: 8,
       isLiked: false,
-      tags: ['kompos', 'organik'],
+      tags: ['compost', 'organic'],
     ),
     CommunityPost(
       id: '2',
       author: 'Budi Recycler',
       avatar: 'BR',
-      timeAgo: '5 jam lalu',
+      timeAgo: '5 hours ago',
       content:
-          'Tips hari ini: Botol plastik bekas bisa dijadikan pot tanaman yang unik! Yuk coba di rumah 💡',
+          'Today\'s tip: Used plastic bottles can be turned into unique plant pots! Try it at home 💡',
       imageUrl: null,
       likes: 18,
       comments: 12,
       isLiked: true,
-      tags: ['diy', 'plastik'],
+      tags: ['diy', 'plastic'],
     ),
     CommunityPost(
       id: '3',
       author: 'Eco Warrior',
       avatar: 'EW',
-      timeAgo: '1 hari lalu',
+      timeAgo: '1 day ago',
       content:
-          'Challenge minggu ini: Zero waste selama 7 hari! Siapa yang mau ikutan? 🌍',
+          'This week\'s challenge: Zero waste for 7 days! Who wants to join? 🌍',
       imageUrl: 'assets/images/zero_waste.jpg',
       likes: 45,
       comments: 23,
@@ -139,14 +139,14 @@ class _CommunityPageState extends State<CommunityPage>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Komunitas',
+                'Community',
                 style: WasteWiseTheme.textTheme.displaySmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.3),
               const SizedBox(height: 4),
               Text(
-                    'Berbagi pengalaman dengan sesama eco-warrior',
+                    'Share experiences with fellow eco-warriors',
                     style: WasteWiseTheme.textTheme.bodyMedium?.copyWith(
                       color: WasteWiseTheme.secondaryText,
                     ),
@@ -255,17 +255,50 @@ class _CommunityPageState extends State<CommunityPage>
                       height: 200,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: WasteWiseTheme.lightGreen.withOpacity(0.3),
+                        gradient: _getPostImageGradient(post.content),
                         borderRadius: BorderRadius.circular(
                           WasteWiseTheme.radiusLarge,
                         ),
                       ),
-                      child: Center(
-                        child: Icon(
-                          Icons.image,
-                          size: 48,
-                          color: WasteWiseTheme.primaryGreen.withOpacity(0.6),
-                        ),
+                      child: Stack(
+                        children: [
+                          // Background pattern
+                          Positioned.fill(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                  WasteWiseTheme.radiusLarge,
+                                ),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    _getPostImageUrl(post.content),
+                                  ),
+                                  fit: BoxFit.cover,
+                                  colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.3),
+                                    BlendMode.darken,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Overlay icon
+                          Center(
+                            child: Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.2),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                _getPostIcon(post.content),
+                                size: 32,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -384,8 +417,8 @@ class _CommunityPageState extends State<CommunityPage>
           const SizedBox(height: WasteWiseTheme.spacing16),
           _buildChallengeCard(
             'Zero Waste Week',
-            'Hidup tanpa sampah selama 7 hari',
-            '3 hari tersisa',
+            'Live zero waste for 7 days',
+            '3 days remaining',
             Icons.eco,
             WasteWiseTheme.primaryGreen,
             0.6,
@@ -739,12 +772,12 @@ class _CommunityPageState extends State<CommunityPage>
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.image),
-                  tooltip: 'Tambah foto',
+                  tooltip: 'Add photo',
                 ),
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(Icons.tag),
-                  tooltip: 'Tambah tag',
+                  tooltip: 'Add tag',
                 ),
               ],
             ),
@@ -764,7 +797,7 @@ class _CommunityPageState extends State<CommunityPage>
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('Post berhasil dibagikan!'),
+                  content: Text('Post successfully shared!'),
                   behavior: SnackBarBehavior.floating,
                 ),
               );
@@ -776,6 +809,63 @@ class _CommunityPageState extends State<CommunityPage>
         ],
       ),
     );
+  }
+
+  LinearGradient _getPostImageGradient(String content) {
+    if (content.toLowerCase().contains('compost')) {
+      return LinearGradient(
+        colors: [
+          WasteWiseTheme.primaryGreen,
+          WasteWiseTheme.primaryGreen.withOpacity(0.7),
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    } else if (content.toLowerCase().contains('zero waste')) {
+      return LinearGradient(
+        colors: [
+          WasteWiseTheme.accentBlue,
+          WasteWiseTheme.accentBlue.withOpacity(0.7),
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    } else {
+      return LinearGradient(
+        colors: [
+          WasteWiseTheme.accentOrange,
+          WasteWiseTheme.accentOrange.withOpacity(0.7),
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      );
+    }
+  }
+
+  IconData _getPostIcon(String content) {
+    if (content.toLowerCase().contains('compost')) {
+      return Icons.compost;
+    } else if (content.toLowerCase().contains('zero waste')) {
+      return Icons.eco;
+    } else if (content.toLowerCase().contains('recycle')) {
+      return Icons.recycling;
+    } else if (content.toLowerCase().contains('plastic')) {
+      return Icons.block;
+    } else {
+      return Icons.nature;
+    }
+  }
+
+  String _getPostImageUrl(String content) {
+    if (content.toLowerCase().contains('compost')) {
+      return 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=200&fit=crop&crop=center';
+    } else if (content.toLowerCase().contains('zero waste')) {
+      return 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=200&fit=crop&crop=center';
+    } else if (content.toLowerCase().contains('recycle')) {
+      return 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=400&h=200&fit=crop&crop=center';
+    } else {
+      return 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=400&h=200&fit=crop&crop=center';
+    }
   }
 }
 

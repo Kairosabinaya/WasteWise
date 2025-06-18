@@ -11,6 +11,14 @@ import 'package:wastewise/core/theme/app_theme.dart';
 import 'package:wastewise/shared/widgets/glass_card.dart';
 import 'package:wastewise/shared/widgets/gamified_button.dart';
 import 'package:wastewise/shared/widgets/points_badge.dart';
+import 'package:wastewise/features/profile/presentation/pages/profile_page.dart';
+import 'package:wastewise/features/notifications/presentation/pages/notifications_page.dart';
+import 'package:wastewise/features/analytics/presentation/pages/analytics_page.dart';
+import 'package:wastewise/features/map/presentation/pages/smart_bin_finder_page.dart';
+import 'package:wastewise/features/rewards/presentation/pages/rewards_page.dart';
+import 'package:wastewise/features/scan/presentation/pages/scan_page.dart';
+import 'package:wastewise/features/marketplace/presentation/pages/marketplace_page.dart';
+import 'package:wastewise/shared/widgets/main_navigation.dart';
 
 /// WasteWise HomePage - Refactored v7.0
 /// Fixed spacing issues, optimized layout structure, clean architecture
@@ -98,11 +106,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       backgroundColor: _backgroundColor,
       body: SizedBox(
         height: MediaQuery.of(context).size.height, // Ensure full screen height
-        child: Stack(
-          children: [
-            _buildScrollableContent(),
-          ],
-        ),
+        child: Stack(children: [_buildScrollableContent()]),
       ),
     );
   }
@@ -171,30 +175,39 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Avatar/Profile Icon
-          AnimatedBuilder(
-            animation: _pulseController,
-            builder: (context, child) {
-              return Transform.scale(
-                scale: 1.0 + (_pulseController.value * 0.03),
-                child: Container(
-                  width: 54,
-                  height: 54,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.3),
-                      width: 2,
-                    ),
-                  ),
-                  child: const Icon(
-                    LucideIcons.user,
-                    color: Colors.white,
-                    size: 26,
-                  ),
-                ),
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
               );
             },
+            child: AnimatedBuilder(
+              animation: _pulseController,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: 1.0 + (_pulseController.value * 0.03),
+                  child: Container(
+                    width: 54,
+                    height: 54,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.3),
+                        width: 2,
+                      ),
+                    ),
+                    child: const Icon(
+                      LucideIcons.user,
+                      color: Colors.white,
+                      size: 26,
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
 
           const SizedBox(width: 16),
@@ -230,31 +243,46 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           const SizedBox(width: 16),
 
           // Notification Icon
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
-              shape: BoxShape.circle,
-            ),
-            child: Stack(
-              children: [
-                const Center(
-                  child: Icon(LucideIcons.bell, color: Colors.white, size: 22),
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotificationsPage(),
                 ),
-                Positioned(
-                  top: 12,
-                  right: 12,
-                  child: Container(
-                    width: 10,
-                    height: 10,
-                    decoration: const BoxDecoration(
-                      color: _statCoral,
-                      shape: BoxShape.circle,
+              );
+            },
+            child: Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.15),
+                shape: BoxShape.circle,
+              ),
+              child: Stack(
+                children: [
+                  const Center(
+                    child: Icon(
+                      LucideIcons.bell,
+                      color: Colors.white,
+                      size: 22,
                     ),
                   ),
-                ),
-              ],
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: const BoxDecoration(
+                        color: _statCoral,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -307,45 +335,53 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         ),
 
                         // Exchange Button
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                _primaryGreen,
-                                _primaryGreen.withOpacity(0.8),
+                        GestureDetector(
+                          onTap: () {
+                            HapticFeedback.lightImpact();
+                            _navigateToMainNavigation(
+                              2,
+                            ); // Marketplace index (now at position 2)
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  _primaryGreen,
+                                  _primaryGreen.withOpacity(0.8),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: _primaryGreen.withOpacity(0.3),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
                               ],
                             ),
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: _primaryGreen.withOpacity(0.3),
-                                blurRadius: 8,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(
-                                LucideIcons.arrowRightLeft,
-                                color: Colors.white,
-                                size: 14,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                'Exchange Points',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(
+                                  LucideIcons.arrowRightLeft,
                                   color: Colors.white,
+                                  size: 14,
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 6),
+                                Text(
+                                  'Exchange Points',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -538,54 +574,63 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     IconData icon,
     Color color,
   ) {
-    return Container(
-      height: 70, // Fixed height to prevent spacing issues
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: _surfaceWhite,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
-              shape: BoxShape.circle,
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const AnalyticsPage()),
+        );
+      },
+      child: Container(
+        height: 70, // Fixed height to prevent spacing issues
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: _surfaceWhite,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
             ),
-            child: Icon(icon, color: color, size: 16),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '$amount $unit',
-                  style: _subheadingStyle.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: color, size: 16),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '$amount $unit',
+                    style: _subheadingStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    maxLines: 1,
                   ),
-                  maxLines: 1,
-                ),
-                Text(
-                  type,
-                  style: _unitStyle.copyWith(fontSize: 12),
-                  maxLines: 1,
-                ),
-              ],
+                  Text(
+                    type,
+                    style: _unitStyle.copyWith(fontSize: 12),
+                    maxLines: 1,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -615,48 +660,57 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _StatCard(String title, String value, IconData icon, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [color, color.withOpacity(0.8)]),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              shape: BoxShape.circle,
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const AnalyticsPage()),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [color, color.withOpacity(0.8)]),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: Colors.white, size: 20),
             ),
-            child: Icon(icon, color: Colors.white, size: 20),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    value,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: Colors.white.withOpacity(0.9),
-                    fontWeight: FontWeight.w500,
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.white.withOpacity(0.9),
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -710,7 +764,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Widget _QuickActionCard(String title, IconData icon, Color color) {
     return GestureDetector(
-      onTap: () => HapticFeedback.mediumImpact(),
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        _navigateToQuickAction(title);
+      },
       child: Container(
         height: 90, // Fixed height to prevent spacing issues
         padding: const EdgeInsets.all(14),
@@ -763,6 +820,56 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
+  void _navigateToMainNavigation(int index) {
+    // Navigate to MainNavigation with specific tab index
+    Navigator.pushAndRemoveUntil(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            MainNavigation(initialIndex: index),
+        transitionDuration: const Duration(milliseconds: 300),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+      ),
+      (route) => false,
+    );
+  }
+
+  void _navigateToQuickAction(String title) {
+    switch (title) {
+      case 'Scan Now':
+        // Navigate directly to ScanPage since it's now a floating button
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ScanPage()),
+        );
+        break;
+      case 'Find Smart Bin':
+        _navigateToMainNavigation(1); // Smart Bin index
+        break;
+      case 'Track Recycle':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const AnalyticsPage()),
+        );
+        break;
+      case 'Earn Rewards':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const RewardsPage()),
+        );
+        break;
+      default:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('$title feature coming soon!'),
+            duration: const Duration(seconds: 2),
+          ),
+        );
+    }
+  }
+
   Widget _buildAchievementsList() {
     final achievements = [
       {
@@ -804,85 +911,93 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Widget _AchievementItem(Map<String, dynamic> achievement) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _surfaceWhite,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  achievement['color'] as Color,
-                  (achievement['color'] as Color).withOpacity(0.8),
-                ],
-              ),
-              shape: BoxShape.circle,
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const RewardsPage()),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: _surfaceWhite,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
             ),
-            child: Icon(
-              achievement['icon'] as IconData,
-              color: Colors.white,
-              size: 24,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      achievement['title'] as String,
-                      style: _subheadingStyle.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    if (achievement['tag'] != null) ...[
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: (achievement['tagColor'] as Color).withOpacity(
-                            0.1,
-                          ),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text(
-                          achievement['tag'] as String,
-                          style: TextStyle(
-                            fontSize: 8,
-                            fontWeight: FontWeight.w700,
-                            color: achievement['tagColor'] as Color,
-                          ),
-                        ),
-                      ),
-                    ],
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    achievement['color'] as Color,
+                    (achievement['color'] as Color).withOpacity(0.8),
                   ],
                 ),
-                const SizedBox(height: 2),
-                Text(achievement['desc'] as String, style: _captionStyle),
-              ],
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                achievement['icon'] as IconData,
+                color: Colors.white,
+                size: 24,
+              ),
             ),
-          ),
-          Icon(LucideIcons.chevronRight, color: _textSecondary, size: 16),
-        ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        achievement['title'] as String,
+                        style: _subheadingStyle.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      if (achievement['tag'] != null) ...[
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: (achievement['tagColor'] as Color)
+                                .withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            achievement['tag'] as String,
+                            style: TextStyle(
+                              fontSize: 8,
+                              fontWeight: FontWeight.w700,
+                              color: achievement['tagColor'] as Color,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                  const SizedBox(height: 2),
+                  Text(achievement['desc'] as String, style: _captionStyle),
+                ],
+              ),
+            ),
+            Icon(LucideIcons.chevronRight, color: _textSecondary, size: 16),
+          ],
+        ),
       ),
     );
   }
@@ -898,15 +1013,8 @@ class CurvedTopPainter extends CustomPainter {
 
     final path = Path();
     path.moveTo(0, 30);
-    path.quadraticBezierTo(
-      size.width * 0.25, 15,
-      size.width * 0.5, 15,
-    );
-    path.quadraticBezierTo(
-      size.width * 0.75, 15,
-      size.width, 30,
-    );
-
+    path.quadraticBezierTo(size.width * 0.25, 15, size.width * 0.5, 15);
+    path.quadraticBezierTo(size.width * 0.75, 15, size.width, 30);
 
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);

@@ -160,25 +160,25 @@ class AuthService {
   String _getFirebaseErrorMessage(String errorCode) {
     switch (errorCode) {
       case 'user-not-found':
-        return 'User tidak ditemukan';
+        return 'User not found';
       case 'wrong-password':
-        return 'Password salah';
+        return 'Wrong password';
       case 'email-already-in-use':
-        return 'Email sudah digunakan';
+        return 'Email already in use';
       case 'weak-password':
-        return 'Password terlalu lemah';
+        return 'Password too weak';
       case 'invalid-email':
-        return 'Format email tidak valid';
+        return 'Invalid email format';
       case 'user-disabled':
-        return 'Akun pengguna dinonaktifkan';
+        return 'User account is disabled';
       case 'too-many-requests':
-        return 'Terlalu banyak percobaan login. Coba lagi nanti.';
+        return 'Too many login attempts. Try again later.';
       case 'operation-not-allowed':
-        return 'Operasi tidak diizinkan';
+        return 'Operation not allowed';
       case 'requires-recent-login':
-        return 'Silakan login ulang untuk melanjutkan';
+        return 'Please login again to continue';
       default:
-        return 'Terjadi kesalahan autentikasi';
+        return 'Authentication error occurred';
     }
   }
 }

@@ -16,7 +16,7 @@ extension StringExtensions on String {
     return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(this);
   }
 
-  /// Checks if the string is a valid phone number (Indonesian format)
+  /// Checks if the string is a valid phone number (International format)
   bool get isValidPhoneNumber {
     return RegExp(r'^(\+62|62|0)[0-9]{9,13}$').hasMatch(this);
   }
@@ -62,9 +62,9 @@ extension StringExtensions on String {
   }
 
   /// Formats a price string with currency
-  String formatPrice({String currency = 'Rp'}) {
+  String formatPrice({String currency = '\$'}) {
     final number = int.tryParse(replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-    return '$currency ${number.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}';
+    return '$currency${number.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
   }
 
   /// Validates if the string is a strong password

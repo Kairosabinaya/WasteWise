@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:wastewise/core/theme/app_theme.dart';
 import 'package:wastewise/shared/widgets/glass_card.dart';
 import 'package:wastewise/shared/widgets/gamified_button.dart';
+import 'package:wastewise/shared/widgets/image_placeholder.dart';
 import 'package:wastewise/shared/widgets/points_badge.dart';
 
 class MarketplacePage extends StatefulWidget {
@@ -33,7 +34,7 @@ class _MarketplacePageState extends State<MarketplacePage>
       name: 'Eco-Friendly Water Bottle',
       description: 'Stainless steel water bottle made from recycled materials',
       points: 500,
-      originalPrice: 150000,
+      originalPrice: 10,
       imageUrl: 'assets/images/water_bottle.png',
       category: 'Electronics',
       rating: 4.8,
@@ -44,7 +45,7 @@ class _MarketplacePageState extends State<MarketplacePage>
       name: 'Organic Cotton T-Shirt',
       description: '100% organic cotton, sustainably produced',
       points: 350,
-      originalPrice: 120000,
+      originalPrice: 7,
       imageUrl: 'assets/images/tshirt.png',
       category: 'Fashion',
       rating: 4.6,
@@ -54,8 +55,8 @@ class _MarketplacePageState extends State<MarketplacePage>
       id: '3',
       name: 'Solar Power Bank',
       description: 'Portable solar charger with 10000mAh capacity',
-      points: 800,
-      originalPrice: 250000,
+      points: 1500,
+      originalPrice: 30,
       imageUrl: 'assets/images/powerbank.png',
       category: 'Electronics',
       rating: 4.9,
@@ -66,7 +67,7 @@ class _MarketplacePageState extends State<MarketplacePage>
       name: 'Bamboo Lunch Box',
       description: 'Sustainable bamboo lunch container set',
       points: 300,
-      originalPrice: 80000,
+      originalPrice: 6,
       imageUrl: 'assets/images/lunchbox.png',
       category: 'Home & Garden',
       rating: 4.5,
@@ -122,7 +123,7 @@ class _MarketplacePageState extends State<MarketplacePage>
                   ).animate().fadeIn(duration: 600.ms).slideX(begin: -0.3),
                   const SizedBox(height: 4),
                   Text(
-                        'Tukar poin dengan produk eco-friendly',
+                        'Eco-friendly products',
                         style: WasteWiseTheme.textTheme.bodyMedium?.copyWith(
                           color: WasteWiseTheme.secondaryText,
                         ),
@@ -152,7 +153,7 @@ class _MarketplacePageState extends State<MarketplacePage>
     return GlassCard(
       child: TextField(
         decoration: InputDecoration(
-          hintText: 'Cari produk...',
+          hintText: 'Search products...',
           prefixIcon: const Icon(
             Icons.search,
             color: WasteWiseTheme.secondaryText,
@@ -241,7 +242,7 @@ class _MarketplacePageState extends State<MarketplacePage>
           crossAxisCount: 2,
           crossAxisSpacing: WasteWiseTheme.spacing12,
           mainAxisSpacing: WasteWiseTheme.spacing12,
-          childAspectRatio: 0.75,
+          childAspectRatio: 0.58, // Further reduced to give more height
         ),
         itemCount: _featuredItems.length,
         itemBuilder: (context, index) {
@@ -262,24 +263,19 @@ class _MarketplacePageState extends State<MarketplacePage>
               // Product Image
               Expanded(
                 flex: 3,
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: WasteWiseTheme.lightGreen.withOpacity(0.3),
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(WasteWiseTheme.radiusLarge),
-                    ),
-                  ),
-                  child: Stack(
-                    children: [
-                      Center(
-                        child: Icon(
-                          Icons.eco,
-                          size: 48,
-                          color: WasteWiseTheme.primaryGreen.withOpacity(0.6),
-                        ),
+                child: Stack(
+                  children: [
+                    // Product Image Placeholder
+                    ImagePlaceholder(
+                      width: double.infinity,
+                      height: double.infinity,
+                      category: item.category,
+                      name: item.name,
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(WasteWiseTheme.radiusLarge),
                       ),
-                      if (item.isPopular)
+                    ),
+                    if (item.isPopular)
                         Positioned(
                           top: 8,
                           right: 8,
@@ -305,79 +301,81 @@ class _MarketplacePageState extends State<MarketplacePage>
                     ],
                   ),
                 ),
-              ),
+              
               // Product Info
               Expanded(
-                flex: 2,
+                flex: 4, // Further increased flex for more space
                 child: Padding(
-                  padding: const EdgeInsets.all(WasteWiseTheme.spacing12),
+                  padding: const EdgeInsets.all(6), // Further reduced padding
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         item.name,
-                        style: WasteWiseTheme.textTheme.titleSmall?.copyWith(
+                        style: WasteWiseTheme.textTheme.labelLarge?.copyWith(
                           fontWeight: FontWeight.w600,
+                          fontSize: 12, // Further reduced font size
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 1),
                       Row(
                         children: [
                           Icon(
                             Icons.star,
-                            size: 14,
+                            size: 12,
                             color: WasteWiseTheme.goldStar,
                           ),
-                          const SizedBox(width: 4),
+                          const SizedBox(width: 2),
                           Text(
                             item.rating.toString(),
                             style: WasteWiseTheme.textTheme.labelSmall
-                                ?.copyWith(color: WasteWiseTheme.secondaryText),
+                                ?.copyWith(
+                                  color: WasteWiseTheme.secondaryText,
+                                  fontSize: 11,
+                                ),
                           ),
                         ],
                       ),
-                      const Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${item.points} pts',
-                                style: WasteWiseTheme.textTheme.titleMedium
-                                    ?.copyWith(
-                                      color: WasteWiseTheme.primaryGreen,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                              Text(
-                                'Rp ${_formatPrice(item.originalPrice)}',
-                                style: WasteWiseTheme.textTheme.labelSmall
-                                    ?.copyWith(
-                                      color: WasteWiseTheme.secondaryText,
-                                      decoration: TextDecoration.lineThrough,
-                                    ),
-                              ),
-                            ],
+                      const SizedBox(height: 4),
+                      // Price and Points
+                      Text(
+                        '${item.points} pts',
+                        style: WasteWiseTheme.textTheme.titleSmall?.copyWith(
+                          color: WasteWiseTheme.primaryGreen,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
+                      Text(
+                        '\$${_formatPrice(item.originalPrice)}',
+                        style: WasteWiseTheme.textTheme.labelSmall?.copyWith(
+                          color: WasteWiseTheme.secondaryText,
+                          decoration: TextDecoration.lineThrough,
+                          fontSize: 9,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      // Exchange Button
+                      SizedBox(
+                        width: double.infinity,
+                        height: 26, // Further reduced button height
+                        child: GamifiedButton(
+                          text: canAfford ? 'Exchange' : 'Not Enough',
+                          onPressed: canAfford
+                              ? () => _showPurchaseDialog(item)
+                              : null,
+                          variant: canAfford
+                              ? ButtonVariant.primary
+                              : ButtonVariant.ghost,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
                           ),
-                          GamifiedButton(
-                            text: canAfford ? 'Tukar' : 'Tidak Cukup',
-                            onPressed: canAfford
-                                ? () => _showPurchaseDialog(item)
-                                : null,
-                            variant: canAfford
-                                ? ButtonVariant.primary
-                                : ButtonVariant.ghost,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
-                            ),
-                            fontSize: 12,
-                          ),
-                        ],
+                          fontSize: 10,
+                        ),
                       ),
                     ],
                   ),
@@ -398,6 +396,79 @@ class _MarketplacePageState extends State<MarketplacePage>
     );
   }
 
+  LinearGradient _getProductGradient(String category) {
+    switch (category.toLowerCase()) {
+      case 'electronics':
+        return LinearGradient(
+          colors: [
+            WasteWiseTheme.accentBlue,
+            WasteWiseTheme.accentBlue.withOpacity(0.7),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        );
+      case 'fashion':
+        return LinearGradient(
+          colors: [
+            WasteWiseTheme.accentPurple,
+            WasteWiseTheme.accentPurple.withOpacity(0.7),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        );
+      case 'home & garden':
+        return LinearGradient(
+          colors: [
+            WasteWiseTheme.primaryGreen,
+            WasteWiseTheme.primaryGreen.withOpacity(0.7),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        );
+      default:
+        return LinearGradient(
+          colors: [
+            WasteWiseTheme.accentOrange,
+            WasteWiseTheme.accentOrange.withOpacity(0.7),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        );
+    }
+  }
+
+  IconData _getProductIcon(String category, String productName) {
+    // First check specific product names
+    if (productName.toLowerCase().contains('bottle')) {
+      return Icons.water_drop;
+    } else if (productName.toLowerCase().contains('shirt') ||
+        productName.toLowerCase().contains('cotton')) {
+      return Icons.checkroom;
+    } else if (productName.toLowerCase().contains('power') ||
+        productName.toLowerCase().contains('solar')) {
+      return Icons.battery_charging_full;
+    } else if (productName.toLowerCase().contains('lunch') ||
+        productName.toLowerCase().contains('bamboo')) {
+      return Icons.lunch_dining;
+    }
+
+    // Then check by category
+    switch (category.toLowerCase()) {
+      case 'electronics':
+        return Icons.devices;
+      case 'fashion':
+        return Icons.checkroom;
+      case 'home & garden':
+        return Icons.home_work;
+      case 'books':
+        return Icons.book;
+      case 'vouchers':
+        return Icons.card_giftcard;
+      default:
+        return Icons.eco;
+    }
+  }
+
   void _showPurchaseDialog(MarketplaceItem item) {
     showDialog(
       context: context,
@@ -406,7 +477,7 @@ class _MarketplacePageState extends State<MarketplacePage>
           borderRadius: BorderRadius.circular(WasteWiseTheme.radiusLarge),
         ),
         title: Text(
-          'Konfirmasi Penukaran',
+          'Confirm Exchange',
           style: WasteWiseTheme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),
@@ -416,7 +487,7 @@ class _MarketplacePageState extends State<MarketplacePage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Apakah Anda yakin ingin menukar ${item.points} poin untuk:',
+              'Are you sure you want to exchange ${item.points} points for:',
               style: WasteWiseTheme.textTheme.bodyMedium,
             ),
             const SizedBox(height: WasteWiseTheme.spacing12),
@@ -429,13 +500,13 @@ class _MarketplacePageState extends State<MarketplacePage>
             ),
             const SizedBox(height: WasteWiseTheme.spacing8),
             Text(
-              'Poin saat ini: $_userPoints',
+              'Current points: $_userPoints',
               style: WasteWiseTheme.textTheme.bodySmall?.copyWith(
                 color: WasteWiseTheme.secondaryText,
               ),
             ),
             Text(
-              'Poin setelah penukaran: ${_userPoints - item.points}',
+              'Points after exchange: ${_userPoints - item.points}',
               style: WasteWiseTheme.textTheme.bodySmall?.copyWith(
                 color: WasteWiseTheme.secondaryText,
               ),
@@ -446,12 +517,12 @@ class _MarketplacePageState extends State<MarketplacePage>
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: Text(
-              'Batal',
+              'Cancel',
               style: TextStyle(color: WasteWiseTheme.secondaryText),
             ),
           ),
           GamifiedButton(
-            text: 'Tukar Sekarang',
+            text: 'Exchange Now',
             onPressed: () {
               Navigator.of(context).pop();
               _processPurchase(item);
@@ -476,7 +547,7 @@ class _MarketplacePageState extends State<MarketplacePage>
             const SizedBox(width: WasteWiseTheme.spacing8),
             Expanded(
               child: Text(
-                'Berhasil menukar ${item.name}! Produk akan dikirim dalam 3-5 hari kerja.',
+                'Successfully exchanged ${item.name}! Product will be shipped in 3-5 business days.',
                 style: const TextStyle(color: Colors.white),
               ),
             ),

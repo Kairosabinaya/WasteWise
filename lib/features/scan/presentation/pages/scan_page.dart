@@ -25,11 +25,11 @@ class _ScanPageState extends State<ScanPage> with TickerProviderStateMixin {
   bool _showResult = false;
 
   // Mock scan result data
-  final String _detectedWaste = "Botol Plastik";
-  final String _wasteCategory = "Plastik Daur Ulang";
+  final String _detectedWaste = "Plastic Bottle";
+  final String _wasteCategory = "Recyclable Plastic";
   final int _earnedPoints = 15;
   final String _recyclingTip =
-      "Pastikan botol kosong dan bersih sebelum didaur ulang";
+      "Make sure the bottle is empty and clean before recycling";
 
   @override
   void initState() {
@@ -294,8 +294,8 @@ class _ScanPageState extends State<ScanPage> with TickerProviderStateMixin {
 
           Text(
             _isScanning
-                ? 'Menganalisis sampah...'
-                : 'Arahkan kamera ke sampah\nuntuk mengidentifikasi jenis',
+                ? 'Analyzing waste...'
+                : 'Point camera at waste\nto identify type',
             style: WasteWiseTheme.textTheme.titleMedium?.copyWith(
               color: Colors.white,
               height: 1.5,
@@ -544,7 +544,7 @@ class _ScanPageState extends State<ScanPage> with TickerProviderStateMixin {
                 ),
                 const SizedBox(height: WasteWiseTheme.spacing20),
                 Text(
-                  'AI sedang menganalisis...',
+                  'AI is analyzing...',
                   style: WasteWiseTheme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -624,7 +624,7 @@ class _ScanPageState extends State<ScanPage> with TickerProviderStateMixin {
                                     ),
                               ),
                               Text(
-                                'Sampah berhasil dianalisis AI',
+                                'Waste successfully analyzed by AI',
                                 style: WasteWiseTheme.textTheme.bodyMedium
                                     ?.copyWith(
                                       color: WasteWiseTheme.secondaryText,
@@ -758,7 +758,7 @@ class _ScanPageState extends State<ScanPage> with TickerProviderStateMixin {
                         const SizedBox(width: WasteWiseTheme.spacing12),
                         Expanded(
                           child: GamifiedButton(
-                            text: 'Tambah ke Tas Daur Ulang',
+                            text: 'Add to Recycle Bag',
                             onPressed: () {
                               Navigator.pop(context);
                             },
